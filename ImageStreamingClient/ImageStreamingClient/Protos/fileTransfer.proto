@@ -1,0 +1,17 @@
+syntax = "proto3";
+package FileTransfer;
+option csharp_namespace = "ImageStreamService";
+
+service FileTransfer {  
+    rpc UploadFile(stream ChunkMsg) returns  (FileResponse);
+}  
+
+message ChunkMsg {
+    string FileName = 1;
+    int64 FileSize = 2;
+    bytes Chunk = 3;
+}
+
+message FileResponse {
+    string FilePath = 1;
+}
