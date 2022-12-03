@@ -1,4 +1,6 @@
+using ImageStreamService.Configuration;
 using ImageStreamService.Services;
+using Microsoft.Extensions.Azure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddGrpc();
 builder.Services.AddGrpcReflection();
+
+builder.Services.Configure<StoragAccountConfiguration>(builder.Configuration.GetSection(StoragAccountConfiguration.SectionName));
+
+builder.Services.AddTransient<IStorageService, StorageService>();
 
 var app = builder.Build();
 
